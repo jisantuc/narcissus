@@ -1,0 +1,13 @@
+*.class
+*.log
+*.bin
+target
+node_modules
+.parcel-cache
+.bloop
+bloop-*
+.bsp
+.metals
+dist
+metals.sbt
+
