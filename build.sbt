@@ -23,10 +23,17 @@ lazy val root = (project in file("."))
   .settings( // Welcome message
     logo := "🌸 Narcissus (v" + version.value + ")",
     usefulTasks := Seq(
-      UsefulTask("fastOptJS", "Rebuild the JS (use during development)"),
+      UsefulTask(
+        "fastOptJS",
+        "Rebuild the JS (use during development)",
+        UsefulTaskAlias.Empty,
+        identity
+      ),
       UsefulTask(
         "fullOptJS",
-        "Rebuild the JS and optimise (use in production)"
+        "Rebuild the JS and optimise (use in production)",
+        UsefulTaskAlias.Empty,
+        identity
       )
     ),
     logoColor        := scala.Console.MAGENTA,
