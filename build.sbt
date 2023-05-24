@@ -18,6 +18,14 @@ val Versions = new {
   val fs2Version      = "3.6.1"
 }
 
+val semanticDbSettings = Seq(
+  semanticdbVersion := scalafixSemanticdb.revision,
+  scalafixOnCompile := true,
+  semanticdbEnabled := true,
+  semanticdbVersion := scalafixSemanticdb.revision,
+  autoAPIMappings   := true
+)
+
 lazy val root = (project in file("."))
   .aggregate(narcissusDatamodel, narcissusApp)
   .settings( // Welcome message
@@ -44,11 +52,13 @@ lazy val root = (project in file("."))
 
 lazy val narcissusDatamodel =
   (project in file("./datamodel"))
+    .enablePlugins(ScalaJSPlugin)
     .settings(
       libraryDependencies ++= Seq(
         "org.scalameta" %%% "munit" % "0.7.29" % Test
       )
     )
+    .settings(semanticDbSettings)
 
 lazy val narcissusApp =
   (project in file("./narcissus"))
@@ -63,8 +73,5 @@ lazy val narcissusApp =
         "org.scalameta"   %%% "munit"        % "0.7.29" % Test
       ),
       scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-      scalafixOnCompile := true,
-      semanticdbEnabled := true,
-      semanticdbVersion := scalafixSemanticdb.revision,
-      autoAPIMappings   := true
+      semanticDbSettings
     )
