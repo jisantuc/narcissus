@@ -10,4 +10,4 @@ bloop-*
 .metals
 dist
 metals.sbt
-
+.env
