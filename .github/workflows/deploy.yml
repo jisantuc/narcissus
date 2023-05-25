@@ -35,8 +35,8 @@ jobs:
       - name: Build production app
         run: ./scripts/test
         env:
-          AUTH0_DOMAIN: ${{ env.AUTH0_DOMAIN }}
-          AUTH0_CLIENT_ID: ${{ env.AUTH0_CLIENT_ID }}
+          AUTH0_DOMAIN: ${{ vars.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ vars.AUTH0_CLIENT_ID }}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.4.1
