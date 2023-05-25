@@ -43,9 +43,7 @@ object auth:
             ) >> pureClient.getTokenSilently()
           else
             pureClient.loginWithRedirect()
-        _ = println("getting token")
         token <- pureClient.getTokenSilently()
-        _ = println(JSON.stringify(token))
       } yield token,
       AuthenticationSuccess(_)
     )
