@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - bugfix/
+      - 'bugfix/**'
 
 jobs:
   release:
