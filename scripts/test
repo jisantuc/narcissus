@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+function inDevShell {
+  nix develop github:PurpleKingdomGames/tyrian -c "$@"
+}
+
+inDevShell yarn
+inDevShell sbt 'scalafmtCheckAll; scalafix --test; test'
+

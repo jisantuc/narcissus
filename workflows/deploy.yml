@@ -1,0 +1,44 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: olafurpg/setup-scala@v11
+      - name: Set up Node toolchain
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+      - name: Cache NPM dependencies
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install NPM dependencies
+        run: yarn install
+
+      - name: Build production Scala.js app
+        run: sbt fullOptJS
+
+      - name: Build production app
+        run: yarn build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages
+          folder: dist
