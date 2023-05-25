@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 'bugfix/**'
 
 jobs:
   release:
@@ -11,37 +12,34 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: olafurpg/setup-scala@v11
-      - name: Set up Node toolchain
-        uses: actions/setup-node@v1
+
+      - uses: cachix/install-nix-action@v20
         with:
-          node-version: "16.x"
+          nix_path: nixpkgs=channel:nixos-22.11
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - uses: cachix/cachix-action@v12
+        with:
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          name: jisantuc
+
       - name: Cache NPM dependencies
         uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: Install NPM dependencies
-        run: yarn install
-
-      - name: Build production Scala.js app
-        run: sbt fullOptJS
-        env:
-          AUTH0_DOMAIN: ${{ env.AUTH0_DOMAIN }}
-          AUTH0_CLIENT_ID: ${{ env.AUTH0_CLIENT_ID }}
+          key: build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
 
       - name: Build production app
-        run: yarn build
+        run: ./scripts/build
+        env:
+          AUTH0_DOMAIN: ${{ vars.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ vars.AUTH0_CLIENT_ID }}
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages
           folder: dist

@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "parcel index.html --no-cache --dist-dir dist --log-level info",
-    "build": "parcel build index.html --dist-dir dist --log-level info"
+    "start": "parcel index.dev.html --no-cache --dist-dir dist --log-level info",
+    "build": "parcel build index.html --public-url ./ --dist-dir dist --log-level info"
   },
   "devDependencies": {
     "parcel": "^2.1.0",

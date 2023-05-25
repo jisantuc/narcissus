@@ -24,7 +24,7 @@ object auth:
       clientId = clientId,
       domain = domain,
       authorizationParams = js.Dynamic.literal(
-        redirect_uri = "http://localhost:1234"
+        redirect_uri = window.location.toString()
       )
     )
     val query = window.location.search
