@@ -93,6 +93,9 @@ lazy val narcissusApp =
 
 lazy val auth0ClientId =
   settingKey[String]("The client id to use for authentication with Auth0")
+    .withRank(KeyRanks.Invisible)
 
 lazy val auth0Domain =
-  settingKey[String]("The domain to use to authenticate with Auth0")
+  settingKey[String]("The domain to use to authenticate with Auth0").withRank(
+    KeyRanks.Invisible
+  )
