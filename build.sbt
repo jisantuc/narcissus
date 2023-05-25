@@ -78,7 +78,7 @@ lazy val narcissusApp =
         "org.scalameta"   %%% "munit"        % "0.7.29" % Test
       ),
       scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-      buildInfoKeys    := Seq(auth0ClientId, auth0Domain, auth0RedirectUri),
+      buildInfoKeys    := Seq(auth0ClientId, auth0Domain),
       buildInfoPackage := "io.github.jisantuc.narcissus",
       auth0ClientId := sys.env.getOrElse(
         "AUTH0_CLIENT_ID",
@@ -87,10 +87,6 @@ lazy val narcissusApp =
       auth0Domain := sys.env.getOrElse(
         "AUTH0_DOMAIN",
         throw new Exception("Missing AUTH0_CLIENT_ID environment variable")
-      ),
-      auth0RedirectUri := sys.env.getOrElse(
-        "AUTH0_REDIRECT_URI",
-        throw new Exception("Missing AUTH0_REDIRECT_URI environment variable")
       ),
       semanticDbSettings
     )
@@ -101,12 +97,5 @@ lazy val auth0ClientId =
 
 lazy val auth0Domain =
   settingKey[String]("The domain to use to authenticate with Auth0").withRank(
-    KeyRanks.Invisible
-  )
-
-lazy val auth0RedirectUri =
-  settingKey[String](
-    "The post-login redirect url after authenticating with Auth0"
-  ).withRank(
     KeyRanks.Invisible
   )
