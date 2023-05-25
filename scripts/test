@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-function inDevShell {
-  nix develop github:PurpleKingdomGames/tyrian -c "$@"
-}
+source ./scripts/nix-funcs.sh
 
 inDevShell yarn
 inDevShell sbt 'scalafmtCheckAll; scalafix --test; test'

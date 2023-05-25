@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#
+source ./scripts/nix-funcs.sh
+
+function build_prod() {
+  inDevShell echo "Domain is: $AUTH0_DOMAIN"
+  inDevShell yarn
+  inDevShell sbt fullOptJS
+}
+
+build_prod
