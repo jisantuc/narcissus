@@ -19,7 +19,8 @@ object narcissus extends TyrianApp[Msg, AppModel]:
       AppModel.unauthenticated,
       auth.authenticateCmd(
         BuildInfo.auth0ClientId,
-        BuildInfo.auth0Domain
+        BuildInfo.auth0Domain,
+        BuildInfo.auth0RedirectUri
       )
     )
 

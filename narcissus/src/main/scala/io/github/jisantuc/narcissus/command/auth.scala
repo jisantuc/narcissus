@@ -19,12 +19,13 @@ object auth:
       clientOptions: js.Object
   ): js.Promise[Auth0Client] = js.native
 
-  def authenticateCmd(clientId: String, domain: String): Cmd[IO, Msg] =
+  def authenticateCmd(clientId: String, domain: String, redirectUri: String): Cmd[IO, Msg] =
     val clientOptions = js.Dynamic.literal(
       clientId = clientId,
       domain = domain,
+      // TODO -- this has to be configurable based on environment
       authorizationParams = js.Dynamic.literal(
-        redirect_uri = "http://localhost:1234"
+        redirect_uri = redirectUri
       )
     )
     val query = window.location.search
