@@ -33,7 +33,7 @@ jobs:
           key: build-${{ env.cache-name }}-${{ hashFiles('**/package.json') }}
 
       - name: Build production app
-        run: ./scripts/test
+        run: ./scripts/build
         env:
           AUTH0_DOMAIN: ${{ vars.AUTH0_DOMAIN }}
           AUTH0_CLIENT_ID: ${{ vars.AUTH0_CLIENT_ID }}
