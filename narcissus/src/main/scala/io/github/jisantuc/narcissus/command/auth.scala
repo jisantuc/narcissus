@@ -8,6 +8,7 @@ import scala.scalajs.js.annotation.JSImport
 import io.github.jisantuc.narcissus.{AuthenticationSuccess, Msg}
 import io.github.jisantuc.narcissus.auth0.Auth0Client
 import io.github.jisantuc.narcissus.auth0.PureAuth0Client
+import io.github.jisantuc.narcissus.BuildInfo
 import org.scalajs.dom.window
 import scala.scalajs.js.JSON
 

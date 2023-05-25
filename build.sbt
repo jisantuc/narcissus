@@ -26,6 +26,10 @@ val semanticDbSettings = Seq(
   autoAPIMappings   := true
 )
 
+lazy val environment = settingKey[String](
+  "The environment to bundle the application for. Used for interpolation of configuration values."
+)
+
 lazy val root = (project in file("."))
   .aggregate(narcissusDatamodel, narcissusApp)
   .settings( // Welcome message
@@ -63,6 +67,7 @@ lazy val narcissusDatamodel =
 lazy val narcissusApp =
   (project in file("./narcissus"))
     .enablePlugins(ScalaJSPlugin)
+    .enablePlugins(BuildInfoPlugin)
     .settings( // Normal settings
       name := "narcissus",
       libraryDependencies ++= Seq(
@@ -73,5 +78,21 @@ lazy val narcissusApp =
         "org.scalameta"   %%% "munit"        % "0.7.29" % Test
       ),
       scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+      buildInfoKeys    := Seq(auth0ClientId, auth0Domain),
+      buildInfoPackage := "io.github.jisantuc.narcissus",
+      auth0ClientId := sys.env.getOrElse(
+        "AUTH0_CLIENT_ID",
+        throw new Exception("Missing AUTH0_CLIENT_ID environment variable")
+      ),
+      auth0Domain := sys.env.getOrElse(
+        "AUTH0_DOMAIN",
+        throw new Exception("Missing AUTH0_CLIENT_ID environment variable")
+      ),
       semanticDbSettings
     )
+
+lazy val auth0ClientId =
+  settingKey[String]("The client id to use for authentication with Auth0")
+
+lazy val auth0Domain =
+  settingKey[String]("The domain to use to authenticate with Auth0")
