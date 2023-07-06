@@ -5,7 +5,7 @@ import sbtwelcome._
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-ThisBuild / scalaVersion := "3.2.1"
+ThisBuild / scalaVersion := "3.2.2"
 
 ThisBuild / version := "0.0.1"
 
@@ -14,8 +14,17 @@ ThisBuild / organization := "io.github.jisantuc"
 ThisBuild / testFrameworks += new TestFramework("munit.Framework")
 
 val Versions = new {
-  val circeFs2Version = "0.14.1"
-  val fs2Version      = "3.6.1"
+  val catsVersion          = "2.9.0"
+  val circeVersion         = "0.14.5"
+  val circeFs2Version      = "0.14.1"
+  val feralVersion         = "0.2.2"
+  val fs2Version           = "3.6.1"
+  val http4sVersion        = "0.23.19"
+  val ip4sVersion          = "3.3.0"
+  val log4catsVersion      = "2.6.0"
+  val natchezVersion       = "0.3.2"
+  val natchezHttp4sVersion = "0.5.0"
+  val skunkVersion         = "0.6.0"
 }
 
 val semanticDbSettings = Seq(
@@ -31,7 +40,13 @@ lazy val environment = settingKey[String](
 )
 
 lazy val root = (project in file("."))
-  .aggregate(narcissusDatamodel, narcissusApp)
+  .aggregate(
+    narcissusDatamodel,
+    narcissusApp,
+    narcissusAPI,
+    narcissusLocal,
+    narcissusLambda
+  )
   .settings( // Welcome message
     logo := "🌸 Narcissus (v" + version.value + ")",
     usefulTasks := Seq(
@@ -59,10 +74,12 @@ lazy val narcissusDatamodel =
     .enablePlugins(ScalaJSPlugin)
     .settings(
       libraryDependencies ++= Seq(
-        "org.scalameta" %%% "munit" % "0.7.29" % Test
-      )
+        "io.circe"      %%% "circe-core" % Versions.circeVersion,
+        "org.typelevel" %%% "cats-core"  % Versions.catsVersion,
+        "org.scalameta" %%% "munit"      % "0.7.29" % Test
+      ),
+      semanticDbSettings
     )
-    .settings(semanticDbSettings)
 
 lazy val narcissusApp =
   (project in file("./narcissus"))
@@ -87,6 +104,53 @@ lazy val narcissusApp =
       auth0Domain := sys.env.getOrElse(
         "AUTH0_DOMAIN",
         throw new Exception("Missing AUTH0_CLIENT_ID environment variable")
+      ),
+      semanticDbSettings
+    )
+
+lazy val narcissusLambda = (project in file("./narcissus-lambda"))
+  .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(LambdaJSPlugin)
+  .dependsOn(narcissusAPI)
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.typelevel" %%% "feral-lambda-http4s" % Versions.feralVersion,
+      "org.tpolecat"  %%% "natchez-xray"        % Versions.natchezVersion
+    ),
+    semanticDbSettings
+  )
+
+lazy val narcissusLocal = (project in file("./narcissus-local"))
+  .dependsOn(narcissusAPI)
+  .enablePlugins(ScalaJSPlugin)
+  .settings(
+    scalaJSUseMainModuleInitializer := true,
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    libraryDependencies ++= Seq(
+      "com.comcast"   %%% "ip4s-core"           % Versions.ip4sVersion,
+      "org.tpolecat"  %%% "skunk-core"          % Versions.skunkVersion,
+      "org.tpolecat"  %%% "natchez-log"         % Versions.natchezVersion,
+      "org.typelevel" %%% "log4cats-core"       % Versions.log4catsVersion,
+      "org.typelevel" %%% "log4cats-js-console" % Versions.log4catsVersion
+    ),
+    semanticDbSettings
+  )
+
+lazy val narcissusAPI =
+  (project in file("./narcissus-api"))
+    .enablePlugins(ScalaJSPlugin)
+    .enablePlugins(LambdaJSPlugin)
+    .dependsOn(narcissusDatamodel)
+    .settings(
+      name := "narcissus-api",
+      libraryDependencies ++= Seq(
+        "dev.optics" %%% "monocle-core"        % "3.2.0",
+        "org.http4s" %%% "http4s-ember-server" % Versions.http4sVersion,
+        "org.http4s" %%% "http4s-circe"        % Versions.http4sVersion,
+        "org.http4s" %%% "http4s-dsl"          % Versions.http4sVersion,
+        "org.tpolecat"  %%% "natchez-http4s" % Versions.natchezHttp4sVersion,
+        "org.tpolecat"  %%% "skunk-core"     % Versions.skunkVersion,
+        "org.scalameta" %%% "munit"          % "0.7.29" % Test
       ),
       semanticDbSettings
     )
