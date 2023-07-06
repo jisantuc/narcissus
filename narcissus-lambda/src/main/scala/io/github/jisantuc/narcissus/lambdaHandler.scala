@@ -33,7 +33,7 @@ object lambdaHandler
           val httpApp = new HttpApp[IO]
 
           // a "middleware" that converts an HttpRoutes into a ApiGatewayProxyHandler
-          ApiGatewayProxyHandler(httpApp.routes)
+          ApiGatewayProxyHandler(httpApp.routes(???))
         }
     }
 }
