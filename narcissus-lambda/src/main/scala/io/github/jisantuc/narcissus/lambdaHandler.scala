@@ -1,14 +1,14 @@
 package io.github.jisantuc.narcissus
 
-import cats.effect.{IO, Resource}
 import cats.effect.std.Random
+import cats.effect.{IO, Resource}
 import feral.lambda._
 import feral.lambda.events._
 import feral.lambda.http4s._
 import io.github.jisantuc.narcissus.HttpApp
+import natchez.xray.XRay
 import org.http4s._
 import org.http4s.dsl.Http4sDsl
-import natchez.xray.XRay
 
 object lambdaHandler
     extends IOLambda[

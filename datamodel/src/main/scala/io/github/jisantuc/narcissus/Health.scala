@@ -1,9 +1,8 @@
 package io.github.jisantuc.narcissus
 
 import cats.data.NonEmptyList
-import io.circe.Encoder
 import io.circe.syntax._
-import io.circe.Json
+import io.circe.{Encoder, Json}
 
 sealed abstract class Health
 

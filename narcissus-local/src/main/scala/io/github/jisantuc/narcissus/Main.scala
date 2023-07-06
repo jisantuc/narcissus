@@ -1,15 +1,14 @@
 package io.github.jisantuc.narcissus
 
-import cats.effect.{ExitCode, IO, IOApp, Resource}
+import cats.effect.{ExitCode, IO, IOApp, Resource, ResourceApp}
 import com.comcast.ip4s._
-import org.http4s.ember.server.EmberServerBuilder
-import natchez.log.Log
-import skunk.Session
-import cats.effect.ResourceApp
 import natchez.Trace
-import org.typelevel.log4cats.console.ConsoleLogger
+import natchez.log.Log
+import org.http4s.ember.server.EmberServerBuilder
 import org.typelevel.log4cats.Logger
+import org.typelevel.log4cats.console.ConsoleLogger
 import org.typelevel.log4cats.extras.LogLevel
+import skunk.Session
 
 object Main extends IOApp {
 

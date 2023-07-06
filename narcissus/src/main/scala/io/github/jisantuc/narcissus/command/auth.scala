@@ -1,16 +1,15 @@
 package io.github.jisantuc.narcissus.command
 
+import scala.scalajs.js.JSON
+import scala.scalajs.js.annotation.JSImport
+
 import cats.effect.IO
+import io.github.jisantuc.narcissus.auth0.{Auth0Client, PureAuth0Client}
+import io.github.jisantuc.narcissus.{AuthenticationSuccess, BuildInfo, Msg}
+import org.scalajs.dom.window
 import tyrian.Cmd
 
 import scalajs.js
-import scala.scalajs.js.annotation.JSImport
-import io.github.jisantuc.narcissus.{AuthenticationSuccess, Msg}
-import io.github.jisantuc.narcissus.auth0.Auth0Client
-import io.github.jisantuc.narcissus.auth0.PureAuth0Client
-import io.github.jisantuc.narcissus.BuildInfo
-import org.scalajs.dom.window
-import scala.scalajs.js.JSON
 
 object auth:
   @js.native

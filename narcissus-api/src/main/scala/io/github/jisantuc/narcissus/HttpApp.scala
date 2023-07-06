@@ -1,12 +1,12 @@
 package io.github.jisantuc.narcissus
 
 import cats.Applicative
+import cats.effect.{Concurrent, Temporal}
+import io.github.jisantuc.narcissus.service.HealthCheck
 import natchez.Trace
+import natchez.http4s.NatchezMiddleware
 import org.http4s._
 import org.http4s.dsl.Http4sDsl
-import cats.effect.{Concurrent, Temporal}
-import natchez.http4s.NatchezMiddleware
-import io.github.jisantuc.narcissus.service.HealthCheck
 import org.http4s.server.Router
 import skunk.Session
 

@@ -1,22 +1,20 @@
 package io.github.jisantuc.narcissus.service
 
-import io.circe.syntax._
-import cats.ApplicativeError
-import cats.syntax.flatMap._
+import scala.concurrent.duration._
+
+import cats.data.NonEmptyList
+import cats.effect.{Concurrent, Temporal}
 import cats.syntax.applicativeError._
-import org.http4s.HttpRoutes
-import org.http4s.dsl.Http4sDsl
-import org.http4s.circe.CirceEntityEncoder._
-import cats.Monad
-import io.github.jisantuc.narcissus.Health
+import cats.syntax.flatMap._
+import cats.{Applicative, ApplicativeError, Monad}
 import io.circe.syntax._
+import io.github.jisantuc.narcissus.Health
+import org.http4s.HttpRoutes
+import org.http4s.circe.CirceEntityEncoder._
+import org.http4s.dsl.Http4sDsl
 import skunk.Session
 import skunk.codec.boolean.bool
 import skunk.implicits._
-import cats.effect.{Concurrent, Temporal}
-import scala.concurrent.duration._
-import cats.Applicative
-import cats.data.NonEmptyList
 
 trait HealthCheck[F[_]: Monad] extends Http4sDsl[F] {
   def checkHealth: F[Health]

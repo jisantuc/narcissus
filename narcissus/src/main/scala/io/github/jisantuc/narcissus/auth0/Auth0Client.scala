@@ -1,7 +1,8 @@
 package io.github.jisantuc.narcissus.auth0
 
-import scalajs.js
 import scala.scalajs.js.annotation.JSImport
+
+import scalajs.js
 
 @js.native
 @JSImport("@auth0/auth0-spa-js", "Auth0Client")
