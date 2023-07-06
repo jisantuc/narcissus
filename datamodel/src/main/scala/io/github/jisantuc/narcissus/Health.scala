@@ -8,14 +8,14 @@ import io.circe.Json
 sealed abstract class Health
 
 object Health {
-  case object Healthy extends Health
+  case object Healthy                                extends Health
   case class Unhealthy(errors: NonEmptyList[String]) extends Health
 
   implicit val encoderHealth: Encoder[Health] = new Encoder[Health] {
     def apply(a: Health): Json = a match {
       case Unhealthy(reasons) =>
         Map("unhealthy" -> reasons).asJson
-      case Healthy => 
+      case Healthy =>
         Map("healthy" -> List.empty[String]).asJson
     }
   }
