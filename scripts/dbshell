@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+docker compose exec database bash -c \
+  "psql -d narcissus -U narcissus"

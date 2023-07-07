@@ -1,15 +1,14 @@
 package io.github.jisantuc.narcissus
 
+import scala.scalajs.js.annotation.*
+
 import cats.effect.IO
+import io.github.jisantuc.narcissus.AppModel.{Authenticated, Unauthenticated}
+import io.github.jisantuc.narcissus.BuildInfo
+import io.github.jisantuc.narcissus.command.auth
 import monocle.syntax.all._
 import tyrian.Html.*
 import tyrian.*
-
-import scala.scalajs.js.annotation.*
-import io.github.jisantuc.narcissus.BuildInfo
-import io.github.jisantuc.narcissus.command.auth
-import io.github.jisantuc.narcissus.AppModel.Authenticated
-import io.github.jisantuc.narcissus.AppModel.Unauthenticated
 
 @JSExportTopLevel("TyrianApp")
 object narcissus extends TyrianApp[Msg, AppModel]:
