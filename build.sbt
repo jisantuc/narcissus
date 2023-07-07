@@ -85,17 +85,19 @@ lazy val narcissusApp =
   (project in file("./narcissus"))
     .enablePlugins(ScalaJSPlugin)
     .enablePlugins(BuildInfoPlugin)
+    .dependsOn(narcissusDatamodel)
     .settings( // Normal settings
       name := "narcissus",
       libraryDependencies ++= Seq(
-        "dev.optics"      %%% "monocle-core" % "3.2.0",
-        "io.indigoengine" %%% "tyrian-io"    % "0.6.2",
         "co.fs2"          %%% "fs2-core"     % Versions.fs2Version,
+        "dev.optics"      %%% "monocle-core" % "3.2.0",
         "io.circe"        %%% "circe-fs2"    % Versions.circeFs2Version,
+        "io.circe"        %%% "circe-parser" % Versions.circeVersion,
+        "io.indigoengine" %%% "tyrian-io"    % "0.6.2",
         "org.scalameta"   %%% "munit"        % "0.7.29" % Test
       ),
       scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-      buildInfoKeys    := Seq(auth0ClientId, auth0Domain),
+      buildInfoKeys    := Seq(auth0ClientId, auth0Domain, apiHost),
       buildInfoPackage := "io.github.jisantuc.narcissus",
       auth0ClientId := sys.env.getOrElse(
         "AUTH0_CLIENT_ID",
@@ -104,6 +106,10 @@ lazy val narcissusApp =
       auth0Domain := sys.env.getOrElse(
         "AUTH0_DOMAIN",
         throw new Exception("Missing AUTH0_CLIENT_ID environment variable")
+      ),
+      apiHost := sys.env.getOrElse(
+        "NARCISSUS_API_HOST",
+        "localhost:8080"
       ),
       semanticDbSettings
     )
@@ -163,3 +169,8 @@ lazy val auth0Domain =
   settingKey[String]("The domain to use to authenticate with Auth0").withRank(
     KeyRanks.Invisible
   )
+
+lazy val apiHost =
+  settingKey[String](
+    "The api host to use to communicate with the backend server"
+  ).withRank(KeyRanks.Invisible)
