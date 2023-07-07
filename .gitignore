@@ -11,3 +11,4 @@ bloop-*
 dist
 metals.sbt
 .env
+.wiki
