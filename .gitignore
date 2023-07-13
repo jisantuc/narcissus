@@ -12,4 +12,3 @@ dist
 metals.sbt
 .env
 .wiki
-.localstack
