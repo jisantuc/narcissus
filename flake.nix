@@ -17,13 +17,14 @@
             let
               systemPackages = pkgs.${system};
               development = (p: [
+                p.nodejs-18_x
                 p.sbt
                 p.yarn
-                p.nodejs-18_x
-                p.terraform-ls
               ]);
               infra = (p: [
+                p.git-crypt
                 p.terraform
+                p.terraform-ls
               ]);
               docs = (p: [
                 p.adrgen
