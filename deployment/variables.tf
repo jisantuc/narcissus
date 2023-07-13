@@ -20,7 +20,7 @@ variable "database_password" {
 
 variable "database_instance_class" {
   type = string
-  default = "db.t4g.small"
+  default = "db.serverless"
 }
 
 variable "auth0_client_id" {

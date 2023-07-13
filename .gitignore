@@ -15,5 +15,5 @@ metals.sbt
 
 # terraform secret and state files
 variables.tfvars
-terraform.tfstate
+terraform.tfstate*
 .terraform*
