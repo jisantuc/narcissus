@@ -14,7 +14,7 @@ The reasons for this are:
 1. There's a good chance I'll get bored with photography and end up not using the thing that I build. I've gotten bored with lots of things, so my current enthusiasm levels aren't the best guide to my future enthusiasm levels. Abandoning the hobby doesn't mean I'll remember to run `terraform destroy`, so I'd like not to spend a thousand dollars on infra I really keep meaning to delete.
 2. As long as I'm the only person using it, there will be literally 0 utilization the overwhelming majority of the time. One user is almost the same as zero users.
 
-This points toward a serverless deployment, since scaling down to 0 is something that serverful deployments can't really do.
+This points toward a serverless deployment, since I'll normally not have much traffic at all, but I might use the app pretty heavily _sometimes_. (I originally thought I could scale all the way to 0 with Aurora Serverless, but that's incorrect.)
 
 However! This causes an issue for dev/prod parity. It's _hard_-ish to get serverless things running locally, including both Aurora and API Gateway endpoints.
 
