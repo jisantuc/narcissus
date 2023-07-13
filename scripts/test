@@ -2,6 +2,7 @@
 
 source ./scripts/nix-funcs.sh
 
+inDevShell terraform fmt --check deployment/
 inDevShell yarn
 inDevShell sbt 'scalafmtCheckAll; scalafix --test; test'
 

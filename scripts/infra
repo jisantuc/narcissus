@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+source ./scripts/nix-funcs.sh
+
+function apply_tf {
+        inDevShell "git-crypt unlock ./git-crypt-secret.key && \
+          pushd terraform && \
+          terraform plan \
+            -var-file=./variables/variables.tfvars -out=tfplan && \
+          terraform apply tfplan && \
+          popd"
+}
+
+apply_tf

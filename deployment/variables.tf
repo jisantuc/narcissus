@@ -1,28 +1,24 @@
 variable "environment" {
   default = "dev"
-  type = string
+  type    = string
 }
 
 variable "aws_region" {
   default = "us-west-2"
-  type = string
+  type    = string
 }
 
 variable "database_username" {
   default = "narcissus"
-  type = string
+  type    = string
 }
 
 variable "database_password" {
-  type = string
+  type      = string
   sensitive = true
 }
 
 variable "database_instance_class" {
-  type = string
+  type    = string
   default = "db.serverless"
-}
-
-variable "auth0_client_id" {
-  type = string
 }
