@@ -9,9 +9,8 @@ terraform {
   required_version = ">= 1.2.0"
 
   backend "s3" {
-    bucket = "narcissus-tf-state-${var.environment}-${var.aws_region}"
-    key    = "tf-state"
-    region = var.aws_region
+    key    = "narcissus.tfstate"
+    region = "us-west-2"
   }
 }
 
