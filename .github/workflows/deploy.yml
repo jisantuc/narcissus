@@ -46,7 +46,7 @@ jobs:
           folder: dist
 
       - name: Save git-crypt key
-        run: echo "${{ secrets.GIT_CRYPT_SECRET_KEY }}" > git-crypt-secret.key
+        run: echo "${{ secrets.GIT_CRYPT_SECRET_KEY }}" | base64 --decode > git-crypt-secret.key
 
       - name: Deploy server
         run: ./scripts/infra
