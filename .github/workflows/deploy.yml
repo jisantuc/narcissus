@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - 'bugfix/**'
-      - feature/js/add-tf-serverless-set
+      - 'feature/js/add-tf-serverless-setup'
 
 jobs:
   release:
