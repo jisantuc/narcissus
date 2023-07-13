@@ -24,9 +24,12 @@
               infra = (p: [
                 p.terraform
               ]);
+              docs = (p: [
+                p.adrgen
+              ]);
+              applyToSystemPackages = (f: f systemPackages);
             in
-            (development systemPackages) ++
-            (infra systemPackages);
+            builtins.map applyToSystemPackages [ development infra docs ];
         };
       });
     };
