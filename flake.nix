@@ -20,6 +20,7 @@
                 p.sbt
                 p.yarn
                 p.nodejs-18_x
+                p.terraform-ls
               ]);
               infra = (p: [
                 p.terraform

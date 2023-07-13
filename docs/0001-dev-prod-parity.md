@@ -16,7 +16,7 @@ The reasons for this are:
 
 This points toward a serverless deployment, since scaling down to 0 is something that serverful deployments can't really do.
 
-However! This causes an issue for dev/prod parity. It's _hard_-ish to get serverless things running locally.
+However! This causes an issue for dev/prod parity. It's _hard_-ish to get serverless things running locally, including both Aurora and API Gateway endpoints.
 
 ## Decision
 
@@ -30,7 +30,7 @@ I considered getting things up and running with Localstack. In the Localstack ve
 
 The downsides to going this route are:
 
-1. Localstack Pro is [required for _any_ RDS usage](https://docs.localstack.cloud/references/coverage/coverage_rds/)
+1. Localstack Pro is [required for _any_ RDS usage](https://docs.localstack.cloud/references/coverage/coverage_rds/) (both Aurora and plain RDS)
 2. Localstack community commits me to [API Gateway v1](https://docs.localstack.cloud/references/coverage/coverage_apigateway/) instead of [API Gateway v2](https://docs.localstack.cloud/references/coverage/coverage_apigatewayv2/). I don't know that I want v2, but I'd like to have the option?
 3. The feedback cycle is a little longer for local server changes, since I have to re-bundle things and `terraform apply` them to Localstack to see the difference
 

@@ -12,3 +12,8 @@ dist
 metals.sbt
 .env
 .wiki
+
+# terraform secret and state files
+variables.tfvars
+terraform.tfstate
+.terraform*
