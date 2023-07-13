@@ -10,5 +10,14 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-west-2"
+  region = var.aws_region
+
+  default_tags {
+    tags = {
+      environment = var.environment
+      project = "Narcissus"
+      terraform-managed = true
+    }
+  }
 }
+
