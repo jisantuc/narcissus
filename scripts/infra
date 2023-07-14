@@ -4,15 +4,19 @@ set -e
 
 source ./scripts/nix-funcs.sh
 
-function apply_tf {
-        bucket="${TF_BACKEND_STATE_BUCKET:-narcissus-tf-state-staging-us-west-2}"
-        inDevShell git-crypt unlock ./git-crypt-secret.key
+function run_terraform {
         pushd ./deployment
         inDevShell terraform init -backend-config="${bucket}"
         inDevShell terraform plan \
             -var-file=./variables/variables.tfvars -out=tfplan
         inDevShell terraform apply tfplan
         popd
+}
+
+function apply_tf {
+        bucket="${TF_BACKEND_STATE_BUCKET:-narcissus-tf-state-staging-us-west-2}"
+        inDevShell git-crypt unlock ./git-crypt-secret.key
+        inDevShell run_terraform
 }
 
 apply_tf
