@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 #
+
+set -e
+
 source ./scripts/nix-funcs.sh
 
-function build_prod() {
-  inDevShell echo "Domain is: $AUTH0_DOMAIN"
+function build_prod_frontend() {
   inDevShell yarn
-  inDevShell sbt fullOptJS
+  inDevShell sbt "narcissusApp/fullOptJS"
   inDevShell npm run build
 }
 
-build_prod
+build_prod_frontend

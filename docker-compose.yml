@@ -6,6 +6,6 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: narcissus
-      POSTGRES_PASSWORD: narcissus
-      POSTGRES_DB: narcissus
+      POSTGRES_USER: ${POSTGRES_USER:-narcissus}
+      POSTGRES_PASSWORD: ${POSTGRES_USER:-narcissus}
+      POSTGRES_DB: ${POSTGRES_USER:-narcissus}
