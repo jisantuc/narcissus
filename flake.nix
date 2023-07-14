@@ -15,13 +15,13 @@
         default = pkgs.${system}.mkShell {
           packages =
             let
-              systemPackages = pkgs.${system};
               development = (p: [
                 p.nodejs-18_x
                 p.sbt
                 p.yarn
               ]);
               infra = (p: [
+                p.git
                 p.git-crypt
                 p.terraform
                 p.terraform-ls
@@ -29,7 +29,7 @@
               docs = (p: [
                 p.adrgen
               ]);
-              applyToSystemPackages = (f: f systemPackages);
+              applyToSystemPackages = (f: f pkgs.${system});
             in
             builtins.map applyToSystemPackages [ development infra docs ];
         };
