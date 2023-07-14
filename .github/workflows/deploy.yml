@@ -51,7 +51,7 @@ jobs:
           GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_SECRET_KEY }}
 
       - name: Deploy server
-        run: ./scripts/infra
+        run: nix develop -c bash ./scripts/infra
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

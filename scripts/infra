@@ -1,19 +1,13 @@
-#!/usr/bin/env bash
-
 set -e
-
-source ./scripts/nix-funcs.sh
-
-function devShellTerraform {
-        inDevShell terraform -chdir="./deployment" $@
-}
 
 function apply_tf {
         bucket="${TF_BACKEND_STATE_BUCKET:=narcissus-tf-state-staging-us-west-2}"
-        devShellTerraform init -backend-config="bucket=${bucket}" -migrate-state
-        devShellTerraform plan \
+        cd deployment
+        terraform init -backend-config="bucket=${bucket}" -migrate-state
+        terraform plan \
             -var-file=./variables/variables.tfvars -out=tfplan
-        devShellTerraform apply tfplan
+        terraform apply tfplan
+        cd ..
 }
 
 apply_tf
