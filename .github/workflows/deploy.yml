@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install git-crypt the dumb way
+        run: apt-get update && apt-get install -t git-crypt
+
       - uses: actions/checkout@v3
 
       - uses: cachix/install-nix-action@v22
