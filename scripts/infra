@@ -7,7 +7,7 @@ source ./scripts/nix-funcs.sh
 function apply_tf {
         bucket="${TF_BACKEND_STATE_BUCKET:-narcissus-tf-state-staging-us-west-2}"
         inDevShell git-crypt unlock ./git-crypt-secret.key
-        pushd terraform
+        pushd ./deployment
         inDevShell terraform init -backend-config="${bucket}"
         inDevShell terraform plan \
             -var-file=./variables/variables.tfvars -out=tfplan
