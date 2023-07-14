@@ -21,7 +21,6 @@
                 p.yarn
               ]);
               infra = (p: [
-                p.git
                 p.git-crypt
                 p.terraform
                 p.terraform-ls
