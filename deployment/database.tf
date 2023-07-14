@@ -16,13 +16,9 @@ module "aurora_cluster" {
   }
 
   # networking
-  vpc_id               = module.vpc.vpc_id
-  db_subnet_group_name = aws_db_subnet_group.narcissus_subnet_group.name
-  security_group_rules = {
-    vpc_ingress = {
-      cidr_blocks = module.vpc.private_subnets_cidr_blocks
-    }
-  }
+  vpc_id                = module.vpc.vpc_id
+  db_subnet_group_name  = aws_db_subnet_group.narcissus_subnet_group.name
+  create_security_group = false
 
   db_parameter_group_name         = aws_db_parameter_group.narcissus.name
   storage_encrypted               = true
