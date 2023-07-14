@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Install git-crypt the dumb way
-        run: sudo apt-get update && sudo apt-get install -t git-crypt
+        run: sudo apt-get update && sudo apt-get install -y git-crypt
 
       - uses: actions/checkout@v3
 
