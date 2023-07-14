@@ -5,10 +5,10 @@
   },
   "devDependencies": {
     "parcel": "^2.1.0",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "prettier": "^2.8.8"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^2.0.4",
-    "prettier": "^2.8.8"
+    "@auth0/auth0-spa-js": "^2.0.4"
   }
 }

@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v22
         with:
           nix_path: nixpkgs=channel:nixos-22.11
           extra_nix_config: |
@@ -24,7 +24,7 @@ jobs:
           name: jisantuc
 
       - name: Cache NPM dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:

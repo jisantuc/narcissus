@@ -5,15 +5,19 @@ on:
     branches:
       - main
       - 'bugfix/**'
+      - 'feature/js/add-tf-serverless-setup'
 
 jobs:
   release:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Install git-crypt the dumb way
+        run: sudo apt-get update && sudo apt-get install -y git-crypt
 
-      - uses: cachix/install-nix-action@v20
+      - uses: actions/checkout@v3
+
+      - uses: cachix/install-nix-action@v22
         with:
           nix_path: nixpkgs=channel:nixos-22.11
           extra_nix_config: |
@@ -25,7 +29,7 @@ jobs:
           name: jisantuc
 
       - name: Cache NPM dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
@@ -38,8 +42,18 @@ jobs:
           AUTH0_DOMAIN: ${{ vars.AUTH0_DOMAIN }}
           AUTH0_CLIENT_ID: ${{ vars.AUTH0_CLIENT_ID }}
 
-      - name: Deploy 🚀
+      - name: Save git-crypt key
+        run: echo "${{ secrets.GIT_CRYPT_SECRET_KEY }}" | base64 --decode > git-crypt-secret.key
+
+      - name: Deploy server
+        run: nix develop -c bash ./scripts/infra
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Deploy Frontend 🚀
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages
           folder: dist
+

@@ -1,0 +1,14 @@
+set -e
+
+function apply_tf {
+        git-crypt unlock git-crypt-secret.key
+        bucket="${TF_BACKEND_STATE_BUCKET:=narcissus-tf-state-staging-us-west-2}"
+        cd deployment
+        terraform init -backend-config="bucket=${bucket}" -migrate-state
+        terraform plan \
+            -var-file=./variables/variables.tfvars -out=tfplan
+        terraform apply tfplan
+        cd ..
+}
+
+apply_tf
